@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', [])
    .controller('HomeCtrl', ['$scope', 'syncData', function($scope, syncData) {
       syncData('syncedValue').$bind($scope, 'syncedValue');
+      console.log('here');
    }])
 
   .controller('ChatCtrl', ['$scope', 'syncData', function($scope, syncData) {
@@ -120,4 +121,9 @@ angular.module('myApp.controllers', [])
          }
       }
 
-   }]);
+   }])
+
+   // New controllers
+    .controller('HeaderCtrl', function ($scope) {
+      console.log($scope);
+    });

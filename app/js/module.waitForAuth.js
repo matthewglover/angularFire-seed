@@ -43,6 +43,20 @@ angular.module('waitForAuth', [])
    })
 
 /**
+ * A directive that shows the element until waitForAuth resolves
+ */
+  .directive( 'ngCloakOnAuth', function( waitForAuth ) {
+    return {
+      restrict: 'A',
+      compile: function( el ) {
+        waitForAuth.then( function( ) {
+          el.addClass('hide');
+        });
+      }
+    };
+  })
+
+/**
  * A directive that shows elements only when the given authentication state is in effect
  */
    .directive('ngShowAuth', function($rootScope) {

@@ -1,72 +1,146 @@
 // ------------------------------------------------
 // Sass Bootstrap variables and include
 // ------------------------------------------------
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
-// $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+@import 'sass-bootstrap/lib/bootstrap';
 
-// @import 'sass-bootstrap/lib/bootstrap';
+
+
+// ------------------------------------------------
+// Mixin declarations
+// ------------------------------------------------
+
+
+// See https://github.com/MoOx/compass-recipes/blob/master/stylesheets/recipes/layout/vertical-align/_block.scss
+@mixin vertical-align-block-wrapper {
+
+    display: table;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+
+    // ie6 ie7
+    *position:relative;
+}
+
+@mixin vertical-align-block {
+    display: table-cell;
+    vertical-align: middle;
+
+    // ie6 ie7
+    *position: absolute;
+    *top: 50%;
+}
+
+// if you support ie lte 7, you need to add an additionnal wrapper under the `vertical-align-block` element
+@mixin vertical-align-block-fallback {
+    // ie6 ie7
+    *position: relative;
+    *top: -50%;
+}
+
+@mixin horizontal-align-block {
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+@mixin maxed-out-size {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+// ------------------------------------------------
+// Utility styles
+// ------------------------------------------------
+
+.v-align-wrapper {
+  @include vertical-align-block-wrapper;
+}
+
+
+.v-align-content {
+  @include vertical-align-block;
+}
+
+.v-align-fallback {
+  @include vertical-align-block-fallback;
+}
+
+.h-align-content {
+  @include horizontal-align-block;
+}
 
 .hide {
-   display: none;
+    display: none;
 }
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.maxed-height {
+  height: 100%;
 }
 
-.menu:before {
-  content: "[";
+.maxed-width {
+  width: 100%;
 }
 
-.menu:after {
-  content: "]";
+.border-red {
+  border: 1px dotted red;
 }
 
-.menu > li {
-  display: inline;
+a.faker, a[ng-click] {
+  cursor: pointer;
 }
 
-.menu > li.hide {
-   display: none;
+// ------------------------------------------------
+// General body styles
+// ------------------------------------------------
+
+html, body {
+  @include maxed-out-size;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+
+
+// ------------------------------------------------
+// Content loading / authorisation styles
+// ------------------------------------------------
+
+//Class to wrap all viewable content
+.app-main {
+  @include maxed-out-size;
+  .content {
+    @include maxed-out-size;
+  }
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+// Pane to be displayed during authorisation process
+.authorizing {
+  @include maxed-out-size;
 }
 
-p.status {
-   color: red;
+.loader {
+  position: absolute;
+  @include maxed-out-size;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 10;
 }
 
-p.status.good, p.good {
-   color: green;
-}
 
-form label {
-   display: block;
-   margin: 15px 0;
-}
+// ------------------------------------------------
+// Authorisation panels
+// ------------------------------------------------
 
-form label span {
-   display: block;
-   font-weight: bold;
-}
 
-.error {
-   color: red;
-}
-
-fieldset {
-   float: left;
-   margin-right: 25px;
-   padding: 25px;
+.auth-panel {
+  .alt-link {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
 }
