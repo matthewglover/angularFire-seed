@@ -19,4 +19,14 @@ angular.module('myApp',
       $rootScope.auth = loginService.init('/login');
       $rootScope.FBURL = FBURL;
     }
-  }]);
+  }])
+
+  .run(function ($rootScope, syncData) {
+    $rootScope.$on('$firebaseSimpleLogin:login', function (event, user) {
+      $rootScope.user = syncData ( ['users', user.uid] );
+    });
+
+    $rootScope.$on( '$firebaseSimpleLogin:logout', function ( ) {
+      $rootScope.user = undefined;
+    });
+  });

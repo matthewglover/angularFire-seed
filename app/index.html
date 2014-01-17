@@ -47,13 +47,15 @@
             <li><a href="#/chat">Chat</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a class="dropdown-toggle faker" data-toggle="dropdown">Account<b class="caret"></b></a>
+            <li  ng-show="user.name" class="dropdown">
+              <a class="dropdown-toggle faker" data-toggle="dropdown">{{ user.name }} <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#/account">Settings</a></li>
                 <li><a ng-click="logout()">Logout</a></li>
-                <li><a href="#/login">Login</a></li>
               </ul>
+            </li>
+            <li ng-hide="user.name">
+              <a href="#/login">Login</a>
             </li>
           </ul>
 
