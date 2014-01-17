@@ -1,12 +1,11 @@
 (function() {
-   'use strict';
+  'use strict';
 
-   /* Services */
+  /* Services */
 
-   angular.module('myApp.services', ['myApp.service.login', 'myApp.service.firebase'])
+  angular.module('myApp.services', ['myApp.service.login', 'myApp.service.firebase']);
 
-      // put your services here!
-      // .service('serviceName', ['dependency', function(dependency) {}]);
+    // put your services here!
+    // .service('serviceName', ['dependency', function(dependency) {}]);
 
 })();
-

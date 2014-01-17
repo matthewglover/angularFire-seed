@@ -84,11 +84,22 @@ module.exports = function (grunt) {
       }
     },
 
-    // Make sure code css are up to par and there are no obvious mistakes
+    // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
         jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
+        reporter: require('jshint-stylish'),
+        // ignore angularFire-seed javascript files
+        ignores: [
+          '<%= project.app %>/js/service.login.js',
+          '<%= project.app %>/js/service.firebase.js',
+          '<%= project.app %>/js/routes.js',
+          '<%= project.app %>/js/module.waitForAuth.js',
+          '<%= project.app %>/js/module.routeSecurity.js',
+          '<%= project.app %>/js/filters.js',
+          '<%= project.app %>/js/directives.js',
+          '<%= project.app %>/js/controllers.js'
+        ]
       },
       all: [
         'Gruntfile.js',
