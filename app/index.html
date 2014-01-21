@@ -27,7 +27,7 @@
     <!-- Main content - hidden during authorisation process -->
     <div ng-cloak-auth class="hide app-main">
       <!-- Navbar -->
-      <nav class="navbar navbar-default" role="navigation" ng-controller="HeaderCtrl">
+      <nav class="navbar navbar-default" role="navigation" ng-controller="HeaderCtrl" ng-show="user.name">
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">

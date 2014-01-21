@@ -21,12 +21,16 @@ angular.module('myApp',
     }
   }])
 
-  .run(function ($rootScope, syncData) {
+  .run(function ($rootScope, syncData, $timeout) {
     $rootScope.$on('$firebaseSimpleLogin:login', function (event, user) {
-      $rootScope.user = syncData ( ['users', user.uid] );
+      $timeout(function () {
+        $rootScope.user = syncData(['users', user.uid]);
+      });
+      console.log($rootScope.user);
     });
 
     $rootScope.$on( '$firebaseSimpleLogin:logout', function ( ) {
       $rootScope.user = undefined;
+      $rootScope.$apply();
     });
   });

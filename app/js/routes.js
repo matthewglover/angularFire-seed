@@ -6,11 +6,13 @@ angular.module('myApp.routes', ['ngRoute'])
   // which should only be available while logged in
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
+      authRequired: true,
       templateUrl: 'partials/home.html',
       controller: 'HomeCtrl'
     });
 
     $routeProvider.when('/chat', {
+      authRequired: true,
       templateUrl: 'partials/chat.html',
       controller: 'ChatCtrl'
     });
@@ -23,6 +25,13 @@ angular.module('myApp.routes', ['ngRoute'])
 
     $routeProvider.when('/login', {
       templateUrl: 'partials/login.html',
+      createMode: false,
+      controller: 'LoginCtrl'
+    });
+
+    $routeProvider.when('/signup', {
+      templateUrl: 'partials/login.html',
+      createMode: true,
       controller: 'LoginCtrl'
     });
 
