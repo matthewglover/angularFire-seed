@@ -91,7 +91,6 @@ module.exports = function (grunt) {
         reporter: require('jshint-stylish'),
         // ignore angularFire-seed javascript files
         ignores: [
-          '<%= project.app %>/js/service.login.js',
           '<%= project.app %>/js/service.firebase.js',
           '<%= project.app %>/js/routes.js',
           '<%= project.app %>/js/module.waitForAuth.js',
@@ -109,7 +108,6 @@ module.exports = function (grunt) {
         options: {
           jshintrc: 'test/.jshintrc',
           ignores: [
-            'test/unit/servicesSpec.js',
             'test/unit/configSpec.js'
           ]
         },
