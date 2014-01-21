@@ -37,7 +37,7 @@ angular.module('myApp.controllers')
             }
             else {
               // must be logged in before I can write to my profile
-              this.login(email, password, function () {
+              ctrl.login(email, password, function () {
                 loginService.createProfile(user.uid, user.email, function () {
                   $location.path('/account');
                 });
