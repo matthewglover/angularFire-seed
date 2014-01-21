@@ -3,12 +3,14 @@
 angular.module('myApp.controllers')
   .controller('LoginCtrl',
     function($scope, loginService, $location, $route) {
+
       $scope.email = null;
       $scope.password = null;
       $scope.confirm = null;
-      // $scope.createMode = false;
 
-      var login = function(email, password, cb) {
+      var ctrl = this;
+
+      this.login = function(email, password, cb) {
         $scope.errorMessage = null;
         if( !email ) {
           $scope.errorMessage = 'Please enter an email address';
@@ -26,7 +28,7 @@ angular.module('myApp.controllers')
         }
       };
 
-      var createAccount = function(email, password, passwordConfirm) {
+      this.createAccount = function(email, password, passwordConfirm) {
         $scope.errorMessage = null;
         if( assertValidLoginAttempt(email, password, passwordConfirm) ) {
           loginService.createAccount(email, password, function(err, user) {
@@ -35,7 +37,7 @@ angular.module('myApp.controllers')
             }
             else {
               // must be logged in before I can write to my profile
-              login(email, password, function () {
+              this.login(email, password, function () {
                 loginService.createProfile(user.uid, user.email, function () {
                   $location.path('/account');
                 });
@@ -60,9 +62,9 @@ angular.module('myApp.controllers')
 
       $scope.submit = function (email, password, passwordConfirm) {
         if ($scope.createMode) {
-          createAccount(email, password, passwordConfirm);
+          ctrl.createAccount(email, password, passwordConfirm);
         } else {
-          login(email, password);
+          ctrl.login(email, password);
         }
       };
 
