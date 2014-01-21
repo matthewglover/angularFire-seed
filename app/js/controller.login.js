@@ -7,16 +7,21 @@ angular.module('myApp.controllers')
       $scope.email = null;
       $scope.password = null;
       $scope.confirm = null;
+      $scope.data = {};
+      $scope.data.loading = false;
 
       var ctrl = this;
 
       this.login = function(email, password, cb) {
+        $scope.data.loading = true;
         $scope.errorMessage = null;
         if( !email ) {
           $scope.errorMessage = 'Please enter an email address';
+          $scope.data.loading = false;
         }
         else if( !password ) {
           $scope.errorMessage = 'Please enter a password';
+          $scope.data.loading = false;
         }
         else {
           loginService.login(email, password, function(err, user) {
@@ -29,9 +34,14 @@ angular.module('myApp.controllers')
       };
 
       this.createAccount = function(email, password, passwordConfirm) {
+        $scope.data.loading = true;
         $scope.errorMessage = null;
-        if( assertValidLoginAttempt(email, password, passwordConfirm) ) {
+        if(!assertValidLoginAttempt(email, password, passwordConfirm) ) {
+          $scope.data.loading = false;
+        }
+        else {
           loginService.createAccount(email, password, function(err, user) {
+            $scope.data.loading = true;
             if( err ) {
               $scope.errorMessage = err ? err + '' : null;
             }

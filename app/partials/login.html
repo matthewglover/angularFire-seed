@@ -1,26 +1,20 @@
+<!-- Loading modal -->
+<div class="authorizing v-align-wrapper loader" ng-show="data.loading">
+  <div class="v-align-content">
+    <div class="v-align-fallback">
+dsfsdf
+      <div class="h-align-content" style="width: 30%;">
+        <div class="progress progress-striped active">
+          <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span class="sr-only">Logging in</span>
+          </div>
+        </div>
+      </div>
 
-<!-- <h2>Login Page</h2>
-
-<form>
-    <label>
-        <span>email</span>
-        <input type="text" ng-model="email" />
-    </label>
-    <label>
-        <span>password</span>
-        <input type="password" ng-model="pass" />
-    </label>
-    <label ng-cloak ng-show="createMode">
-        <span>confirm pass</span>
-        <input type="password" ng-model="confirm" />
-    </label>
-    <button ng-click="login()" ng-hide="createMode">Log In</button>
-    <button ng-click="createMode = true" ng-hide="createMode">Register</button>
-    <button ng-cloak ng-show="createMode" ng-click="createAccount()">Create Account</button>
-    <button ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
-
-    <p ng-show="err" class="error">{{err}}</p>
-</form> -->
+    </div>
+  </div>
+</div>
+<!-- // Loading modal -->
 
 <!-- Bootstrap container -->
 <div class="container maxed-height">
@@ -79,22 +73,3 @@
 
 </div>
 <!-- // Bootstrap container -->
-
-
-<!-- Loading modal -->
-<div class="authorizing v-align-wrapper loader" ng-show="data.loading">
-  <div class="v-align-content">
-    <div class="v-align-fallback">
-
-      <div class="h-align-content" style="width: 30%;">
-        <div class="progress progress-striped active">
-          <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-            <span class="sr-only">Logging in</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- // Loading modal -->
