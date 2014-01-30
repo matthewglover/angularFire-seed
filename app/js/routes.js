@@ -35,5 +35,11 @@ angular.module('myApp.routes', ['ngRoute'])
       controller: 'LoginCtrl'
     });
 
+    $routeProvider.when('/search', {
+      authRequired: true,
+      templateUrl: 'partials/search.html',
+      controller: 'SearchCtrl'
+    });
+
     $routeProvider.otherwise({redirectTo: '/home'});
   }]);

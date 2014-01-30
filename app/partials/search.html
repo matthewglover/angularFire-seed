@@ -1,0 +1,85 @@
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <!-- <form role="form">
+    <div class="form-group">
+      <label class="sr-only" for="placeSearch">Search</label>
+      <input type="text" class="form-control" id="placeSearch" placeholder="Place search" ng-model="placeSearch"
+        typeahead="place for place in findPlaces($viewValue) | filter:$viewValue" typeahead-min-length="3" typeahead-wait-ms="200">
+    </div>
+  </form> -->
+
+  <div  class="col-lg-6">
+    <div class="row">
+      <button type="button" class="btn btn-success dropdown-toggle" ng-click="findNearMe()">Find near me</button>
+      <br><br>
+    </div>
+    <div class="row">
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="placeName" ng-change="changePlaceName(placeName)" placeholder="Place name">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle"
+              data-toggle="dropdown">{{ searchType.description }} <span class="caret"></span></button>
+          <ul class="dropdown-menu pull-right">
+            <li><a class="faker" ng-click="setSearchType('nearMe')">{{ searchConfig.nearMe.description }}</a></li>
+            <li><a class="faker" ng-click="setSearchType('chooseLocation')">{{ searchConfig.chooseLocation.description }}</a></li>
+         </ul>
+        </div><!-- /.btn-group -->
+      </div><!-- /.input-group -->
+    </div><!-- /.row -->
+    <div class="row" style="margin-top: 10px;" ng-if="isChooseLocation()">
+      <div class="input-group">
+        <input 
+            type="text"
+            class="form-control"
+            placeholder="Location"
+            ng-model="data.geocodeAddress"
+            typeahead-on-select="onSelectLocation()"
+            typeahead="address for address in geocode($viewValue) | filter:$viewValue"
+            typeahead-wait-ms="100">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle"
+              data-toggle="dropdown">{{ getCurrentCountryName() }} <span class="caret"></span></button>
+          <ul class="dropdown-menu pull-right">
+            <li ng-repeat="country in getCountries()"><a class="faker" ng-click="setCurrentCountry(country[0])">{{ country[1] }}</a></li>
+          </ul>
+        </div><!-- /.btn-group -->
+      </div><!-- /.input-group -->
+    </div><!-- /.row -->
+  </div><!-- /.col-lg-6 -->
+  <div class="col-lg-6">
+    <h2><small>Results</small></h2>
+    <ul class="list-group">
+      <li class="list-group-item clearfix" ng-repeat="place in factual.places">
+        <div class="pull-left">
+          <h4 class="list-group-item-heading">{{ place.name }}, {{ place.formattedAddress }}</h4>
+          <p class="list-group-item-text">
+            Distance: {{ calcDistanceFrom(place.lat, place.lng) }} miles
+            <button type="button" class="btn btn-primary btn-xs">more</button>
+          </p>
+        </div>
+        <button type="button" class="btn btn-success pull-right" ng-click="spotIt(place)">Spot it!</button>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+
+
+<!-- <form role="form" ng-submit="geocode(geocodeAddress)">
+    <div class="form-group">
+      <label class="sr-only" for="geocodeAddress">Search</label>
+      <input type="text" class="form-control" id="geocodeAddress" placeholder="Enter address" ng-model="geocodeAddress"
+        typeahead="address for address in geocode($viewValue) | filter:$viewValue" typeahead-wait-ms="100">
+    </div>
+  </form>
+ -->
+
+ <!--   <div ng-if="factual.total">
+    Displaying results 1 - 10 of {{ factual.total }}
+  </div>
+  <ul>
+    <li ng-repeat="place in factual.places">{{ place.name }}</li>
+  </ul> -->
