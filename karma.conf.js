@@ -27,7 +27,7 @@ module.exports = function(config) {
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: ['app/js/firebase-util/**/*.js'],
 
     // web server port
     port: 8080,

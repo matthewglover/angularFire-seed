@@ -97,7 +97,8 @@ module.exports = function (grunt) {
           '<%= project.app %>/js/module.routeSecurity.js',
           '<%= project.app %>/js/filters.js',
           '<%= project.app %>/js/directives.js',
-          '<%= project.app %>/js/controllers.js'
+          '<%= project.app %>/js/controllers.js',
+          '<%= project.app %>/js/firebase-util/**/*.js'
         ]
       },
       all: [

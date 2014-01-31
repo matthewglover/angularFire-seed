@@ -1,14 +1,5 @@
 <div class="container">
   <br>
-  <br>
-  <br>
-  <!-- <form role="form">
-    <div class="form-group">
-      <label class="sr-only" for="placeSearch">Search</label>
-      <input type="text" class="form-control" id="placeSearch" placeholder="Place search" ng-model="placeSearch"
-        typeahead="place for place in findPlaces($viewValue) | filter:$viewValue" typeahead-min-length="3" typeahead-wait-ms="200">
-    </div>
-  </form> -->
 
   <div  class="col-lg-6">
     <div class="row">
@@ -28,6 +19,7 @@
         </div><!-- /.btn-group -->
       </div><!-- /.input-group -->
     </div><!-- /.row -->
+
     <div class="row" style="margin-top: 10px;" ng-if="isChooseLocation()">
       <div class="input-group">
         <input 
@@ -47,7 +39,23 @@
         </div><!-- /.btn-group -->
       </div><!-- /.input-group -->
     </div><!-- /.row -->
+
+    <div class="row">
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item clearfix" ng-repeat="spot in userSpots">
+          <div class="pull-left">
+            <h4 class="list-group-item-heading">
+              {{ spot.name }} 
+            </h4>
+          </div>
+          <button type="button" class="btn btn-danger pull-right" ng-click="unSpotIt(spot)">un-Spot it!</button>
+        </li>
+      </ul>
+    </div>
+
   </div><!-- /.col-lg-6 -->
+
   <div class="col-lg-6">
     <h2><small>Results</small></h2>
     <ul class="list-group">

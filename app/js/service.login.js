@@ -3,7 +3,7 @@
 angular.module('myApp.service.login', ['firebase', 'myApp.service.firebase'])
 
   .factory('loginService',
-    function($rootScope, $firebaseSimpleLogin, firebaseRef, profileCreator, $timeout) {
+    function ($rootScope, $firebaseSimpleLogin, firebaseRef, profileCreator, $timeout) {
       var auth = null;
  
       function assertAuth() {
