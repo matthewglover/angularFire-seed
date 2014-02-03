@@ -11,7 +11,8 @@ angular.module('myApp',
     'myApp.controllers',
     'waitForAuth',
     'routeSecurity',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'infinite-scroll'
   ]
 )
 
