@@ -1,10 +1,9 @@
 /*global google*/
-/*global Firebase*/
 'use strict';
 
 angular.module('myApp.controllers')
   .controller('SearchCtrl',
-    function ($scope, gsFactual, gsGeolocation, gsGeocoder, $timeout, gsCountrySelector, syncData, FBURL) {
+    function ($scope, gsFactual, gsGeolocation, gsGeocoder, $timeout, gsCountrySelector, firebaseRef, gsFirebaseUserSpots) {
       // *********************************************
       // Private vars
       // *********************************************
@@ -16,11 +15,6 @@ angular.module('myApp.controllers')
       var _placeSearchQueue = [];
       var _minChars = 3;
       var _delay = 500;
-
-      // User spots
-      // var spotsRef = syncData('spots');
-      // var userSpotsRef = syncData(['users', $scope.auth.user.uid, 'spots']);
-
 
 
       // *********************************************
@@ -86,75 +80,69 @@ angular.module('myApp.controllers')
         return distance;
       };
 
-      this.fbRef = function () {
-        var n = arguments.length;
-        var strPath = FBURL;
-        for (var i = 0; i < n; i++) { strPath += '/' + arguments[i]; }
-        return new Firebase(strPath);
-      };
+      // this.cleanData = function (data) {
+      //   var obj = {};
+      //   angular.forEach(data, function(value, key){
+      //     if (key.match(/^\$/)) { return; }
+      //     obj[key] = value;
+      //   });
+      //   return obj;
+      // };
 
-      this.cleanData = function (data) {
-        var obj = {};
-        angular.forEach(data, function(value, key){
-          if (key.match(/^\$/)) { return; }
-          obj[key] = value;
-        });
-        return obj;
-      };
+      // this.spotIt = function (spotData) {
+      //   var factualRef = 'factual_' + spotData.factualId;
+      //   spotData = self.cleanData(spotData);
+      //   // console.log(spotData);
+      //   fbUserSpots.child(factualRef).set(true);
+      //   fbSpots.child(factualRef).transaction(function (currentSpotData) {
+      //     if (currentSpotData !== null) {
+      //       angular.extend(currentSpotData, spotData);
+      //       currentSpotData.users[$scope.auth.user.uid] = true;
+      //       return currentSpotData;
+      //     }
+      //     else {
+      //       spotData.users = {};
+      //       spotData.users[$scope.auth.user.uid] = true;
+      //       return spotData;
+      //     }
+      //   });
+      // };
 
-      this.spotIt = function (spotData) {
-        var factualRef = 'factual_' + spotData.factualId;
-        spotData = self.cleanData(spotData);
-        console.log(spotData);
-        fbUserSpots.child(factualRef).set(true);
-        // fbSpots.child(factualRef).update(spot);
-        fbSpots.child(factualRef).transaction(function (currentSpotData) {
-          if (currentSpotData !== null) {
-            angular.extend(currentSpotData, spotData);
-            currentSpotData.users[$scope.auth.user.uid] = true;
-            return currentSpotData;
-          }
-          else {
-            spotData.users = {};
-            spotData.users[$scope.auth.user.uid] = true;
-            return spotData;
-          }
-        });
+      // this.unSpotIt = function (spot) {
+      //   var factualRef = 'factual_' + spot.factualId;
+      //   fbUserSpots.child(factualRef).remove();
+      // };
+
+      // this.getUserSpots = function () {
+      //   $scope.userSpots = {};
+
+      //   fbUserSpots.on('child_added', function (userSpot) {
+      //     var ref = userSpot.name();
+      //     fbSpots.child(ref).on('value', function (spot) {
+      //       $timeout(function () {
+      //         $scope.userSpots[ref] = spot.val();
+      //       });
+      //     });
+      //   });
+
+      //   fbUserSpots.on('child_removed', function (userSpot) {
+      //     var ref = userSpot.name();
+      //     $timeout(function () {
+      //       delete $scope.userSpots[ref];
+      //     });
+      //   });
+      // };
+
+      // var fbUserSpots = firebaseRef('users', $scope.auth.user.uid, 'spots');
+      // var fbSpots = firebaseRef('spots');
+
+      this.spotIt = function (spot) {
+        $scope.userSpots.add(spot);
       };
 
       this.unSpotIt = function (spot) {
-        var factualRef = 'factual_' + spot.factualId;
-        fbUserSpots.child(factualRef).remove();
+        $scope.userSpots.remove(spot);
       };
-
-      this.getUserSpots = function () {
-        $scope.userSpots = {};
-
-        fbUserSpots.on('child_added', function (userSpot) {
-          var ref = userSpot.name();
-          fbSpots.child(ref).on('value', function (spot) {
-            $timeout(function () {
-              $scope.userSpots[ref] = spot.val();
-            });
-          });
-        });
-
-        fbUserSpots.on('child_removed', function (userSpot) {
-          var ref = userSpot.name();
-          $timeout(function () {
-            delete $scope.userSpots[ref];
-          });
-        });
-
-        // fbUserSpots.on('value', function (userSpots) {
-        //   console.log('----------------start---------------------');
-        //   console.log(userSpots);
-        //   console.log('----------------end---------------------');
-        // });
-      };
-
-      var fbUserSpots = self.fbRef('users', $scope.auth.user.uid, 'spots');
-      var fbSpots = self.fbRef('spots');
 
       // *********************************************
       // Scope methods
@@ -207,10 +195,13 @@ angular.module('myApp.controllers')
           } );
       };
 
-      $scope.calcDistanceFrom = function (lat, lng) {
+      $scope.calcDistanceFrom = function (obj) {
+        if (!angular.isObject(obj) || !obj.lat || !obj.lng) { return; }
         var crntLatLng = self.getCrntLocation();
-        var distance = self.calcDistanceBetween(crntLatLng, { lat: lat, lng: lng }, 'miles');
-        return Math.round(distance*100)/100;
+        if (angular.isDefined(crntLatLng)) {
+          var distance = self.calcDistanceBetween(crntLatLng, { lat: obj.lat, lng: obj.lng }, 'miles');
+          return Math.round(distance*100)/100;
+        }
       };
 
       $scope.spotIt = function (place) {
@@ -236,19 +227,6 @@ angular.module('myApp.controllers')
         self.findNearMe();
       };
 
-      // $scope.players = {
-      //   'Shinji Kagawa': { name: 'Shinji', position: 'Playmaker' },
-      //   'Patrice Evra': { name: 'Patrice', position: 'Fullback' },
-      //   'Rio Ferdinand': { name: 'Rio', position: 'Centreback' },
-      //   'Robin van Persie': { name: 'Robin', position: 'Forward' },
-      //   'Adnan Januzaj': { name: 'Adnan', position: 'Winger' }
-      // };
-
-      // $scope.nameFilter = {
-      //   'Rio Ferdinand': true,
-      //   'Robin van Persie': true
-      // };
-
       $scope.placeFilter = function (val) { return 'factual_'+val; };
 
       // *********************************************
@@ -260,6 +238,7 @@ angular.module('myApp.controllers')
       $scope.geolocation = gsGeolocation;
       $scope.geocoder = gsGeocoder;
       $scope.countrySelector = gsCountrySelector;
+      $scope.userSpots = gsFirebaseUserSpots($scope.auth.user.uid);
 
 
       $scope.searchConfig = {};
@@ -268,7 +247,7 @@ angular.module('myApp.controllers')
 
       $scope.searchType = $scope.searchConfig.nearMe;
 
-      self.getUserSpots();
+      // self.getUserSpots();
 
       $scope.data = {};
 

@@ -40,29 +40,20 @@
       </div><!-- /.input-group -->
     </div><!-- /.row -->
 
-    <!-- <div class="row">
-      <br>
-      <ul class="list-group">
-        <li class="list-group-item clearfix" ng-repeat="(key, value) in players | excludeMatching:nameFilter">
-          <div class="pull-left">
-            <h4 class="list-group-item-heading">
-              {{ key }} - {{ value.position}}
-            </h4>
-          </div>
-        </li>
-      </ul>
-    </div> -->
-
     <div class="row">
       <br>
       <ul class="list-group">
-        <li class="list-group-item clearfix" ng-repeat="spot in userSpots">
+        <li class="list-group-item clearfix" ng-repeat="spot in userSpots.data" ng-if="spot">
           <div class="pull-left">
             <h4 class="list-group-item-heading">
               {{ spot.name }}, {{ spot.formattedAddress }}
             </h4>
+            <p>
+              Distance: {{ calcDistanceFrom(spot) }} miles
+              <button type="button" class="btn btn-danger btn-xs" ng-click="unSpotIt(spot)">un-spot it</button>
+            </p>
           </div>
-          <button type="button" class="btn btn-danger pull-right" ng-click="unSpotIt(spot)">un-Spot it!</button>
+          <button type="button" class="btn btn-primary pull-right">more</button>
         </li>
       </ul>
     </div>
@@ -72,11 +63,11 @@
   <div class="col-lg-6">
     <h2><small>Results</small></h2>
     <ul class="list-group" infinite-scroll="fct.fetchMore()">
-      <li class="list-group-item clearfix" ng-repeat="place in factual.places | excludeMatching:userSpots:'factualId':placeFilter">
+      <li class="list-group-item clearfix" ng-repeat="place in factual.places | excludeMatching:userSpots.data:'factualId':placeFilter">
         <div class="pull-left">
           <h4 class="list-group-item-heading">{{ place.name }}, {{ place.formattedAddress }}</h4>
           <p class="list-group-item-text">
-            Distance: {{ calcDistanceFrom(place.lat, place.lng) }} miles
+            Distance: {{ calcDistanceFrom(place) }} miles
             <button type="button" class="btn btn-primary btn-xs">more</button>
           </p>
         </div>

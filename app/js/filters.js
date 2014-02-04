@@ -18,7 +18,8 @@ angular.module('myApp.filters', [])
       if (angular.isDefined(fnFilter)) { val = fnFilter(val); }
       var n = matches.length;
       for (var i = 0; i < n; i++) {
-        if (matches[i] === val) { return true; }
+        var match = matches[i];
+        if (match === val) { return true; }
       }
       return false;
     };
@@ -71,7 +72,7 @@ angular.module('myApp.filters', [])
       // Get matches array. Return if no array to match against
       if (angular.isObject(matches)) { matches = getKeysArray(matches); }
       if (!angular.isArray(matches)) { return items; }
-
+      
       // Handle items array
       if (angular.isArray(items)) {
         if (!angular.isDefined(field)) { return items; }

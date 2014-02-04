@@ -26,7 +26,11 @@ angular.module('myApp.controllers')
         else {
           loginService.login(email, password, function(err, user) {
             $scope.errorMessage = err ? err + '' : null;
-            if( !err && cb) {
+            if (err) {
+              $scope.loading = false;
+              return;
+            }
+            if (cb) {
               cb(user);
             }
           });
